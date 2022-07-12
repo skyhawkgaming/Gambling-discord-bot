@@ -170,7 +170,7 @@ function addTotalBet(profile, reaction, user, bet_data, client) {
 		reaction.message.channel.send(replies.BetInsufisantBalance(config.bet.name), {
 			tts: config.bet.tss
 		});
-		return log.ko(`Insufisant wallet fund for bet ${profile.wallet} < ${balance}`);
+		return log.ko(`Insufficient funds for bet ${profile.wallet} < ${balance}`);
 	}
 	// Update both totalbet of the predicion and totalbet of the option
 	bet_data.bet.totalBet += balance;
@@ -180,14 +180,14 @@ function addTotalBet(profile, reaction, user, bet_data, client) {
 	for (let i = 0; i < bet_data.bet.options[bet_data.choice].bettors_nbr; i++) {
 		// If user is found in option bettors list, his datas are updated
 		if (bet_data.bet.options[bet_data.choice].bettors[i].id == user.id) {
-			log.info(`${user.id} add ${balance} to his totalBet on option: "${bet_data.bet.options[bet_data.choice].content}"`)
+			log.info(`${user.id} added ${balance} to their total bet on option: "${bet_data.bet.options[bet_data.choice].content}"`)
 			alreadybet = true;
 			bet_data.bet.options[bet_data.choice].bettors[i].bet += balance;
 			user_totalbet = bet_data.bet.options[bet_data.choice].bettors[i].bet;
 		}
 	}
 	if (!alreadybet) { // False only if user's id wasn't found in option bettors list
-		log.info(`New bettor for option: "${bet_data.bet.options[bet_data.choice].content}" with ${balance} currency"`)
+		log.info(`New bet for option: "${bet_data.bet.options[bet_data.choice].content}" with ${balance} ${config.name}"`)
 		bet_data.bet.options[bet_data.choice].bettors.push({
 			id: user.id,
 			username: user.username,
@@ -285,7 +285,7 @@ module.exports = {
 				});
 			});
 		} catch (e) {return log.ko(e)}
-		log.info(`Bet "${bet.question}" have been sucesfully deleted from the database`);
+		log.info(`Bet "${bet.question}" has been sucesfully deleted from the database`);
 	},
 	// Add a new prediction in the database
 	/*

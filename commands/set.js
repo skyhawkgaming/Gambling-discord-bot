@@ -8,7 +8,7 @@ function createEmbed(profile) {
 	let Embed = new Discord.MessageEmbed()
 	.setColor(config.profile.color)
 	.setTitle(profile.name)
-	.setDescription(profile.desc)
+	.setDescription(profile.bio)
 	.setThumbnail(profile.avatar)
 	.addFields(
 		{ name: `${replies.balanceLabel}`, value: `${profile.wallet} ${config.bet.name}`, inline: false}
@@ -22,13 +22,13 @@ module.exports = {
 	async run(client, message, args) {
 		//Error Checking
 		if (args.lenght != 2) {
-			log.ko('Invalid args number for profile setting');
+			log.ko('Invalid args number for profile setting: !set avatar/name/bio');
 			message.reply(replies.settingInvalidParameterNumber, {
 				tts: config.bet.tts,
 			});
 			return;
 		}
-		if (!['avatar', 'name', 'desc'].includes(args.at[0])) {
+		if (!['avatar', 'name', 'bio'].includes(args.at[0])) {
 			log.ko(`Invalid args "${args.at[0]}" for profile setting`);
 			message.reply(replies.settingInvalidParameter, {
 				tts: config.bet.tts,
@@ -53,8 +53,8 @@ module.exports = {
 			case 'name':
 				await redis.hset(`profile:${message.author.id}`, 'name', value);
 				break;
-			case 'desc':
-				await redis.hset(`profile:${message.author.id}`, 'desc', value);
+			case 'bio':
+				await redis.hset(`profile:${message.author.id}`, 'bio', value);
 				break;
 			default:
 				break;

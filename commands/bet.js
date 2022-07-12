@@ -8,11 +8,12 @@ const prediction = require('../modules/prediction');
 
 module.exports = {
 	name: "bet",
-	desc: "instanciate a prediction",
+	aliases: [ "gamba", "predict" ],
+	desc: "Create a bet",
 	async run(client, message, args) {
-		log.info(`${message.author.username} is trying to place make a prediction`);
+		log.info(`${message.author.username} is trying to place a bet`);
 		if (args.lenght < 3) {
-			log.ko(`Invalid Parameter for prediction`);
+			log.ko(`Invalid Parameter for prediction: ${config.prefix}bet <choice #>`);
 			message.reply(replies.PredictInvalidArguments, {
 				tts: config.bet.tts,
 			});
